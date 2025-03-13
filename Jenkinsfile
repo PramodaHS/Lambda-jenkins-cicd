@@ -6,15 +6,12 @@ pipeline {
         S3_BUCKET = 'pramod-lambda-deployments'
         FUNCTION_NAME = 'myLambdaFunction'
         AWS_REGION = 'ap-south-1'
-        SLACK_WEBHOOK_URL = credentials('ee5739a3-4b28-4c40-8baf-dd3a794ddcf3') 
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                script {
-                    git branch: 'master', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
-                }
+                git branch: 'master', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
             }
         }
 
@@ -48,22 +45,10 @@ pipeline {
             sh 'rm -f lambda-package.zip'
         }
         success {
-            script {
-                slackSend (
-                    color: 'good',
-                    message: "✅ *Deployment Successful!* :rocket:\nBranch: `us-4010`\nLambda Function: `$FUNCTION_NAME`",
-                    channel: '#deployments'
-                )
-            }
+            slackSend channel: '#jenkins', message: "✅ Jenkins Deployment Successful!"
         }
         failure {
-            script {
-                slackSend (
-                    color: 'danger',
-                    message: "❌ *Deployment Failed!* :x:\nCheck Jenkins logs for more details.",
-                    channel: '#deployments'
-                )
-            }
+            slackSend channel: '#jenkins', message: "❌ Jenkins Deployment Failed! Check logs."
         }
     }
 }
