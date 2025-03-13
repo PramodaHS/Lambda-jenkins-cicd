@@ -11,7 +11,8 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'master', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
+                git branch: 'US-4010', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
+                // git branch: 'master', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
             }
         }
 
@@ -45,10 +46,11 @@ pipeline {
             sh 'rm -f lambda-package.zip'
         }
         success {
-            slackSend channel: '#jenkins', message: "✅ *Deployment Successful!*\n\n*Job:* ${JOB_NAME} \n*Build Number:* ${BUILD_NUMBER} \n*View Job:* ${BUILD_URL}"
+            slackSend channel: '#jenkins', message: " *Deployment Successful!*\n\n*Job:* ${JOB_NAME} \n*Branch:* ${GIT_BRANCH} \n*Build Number:* ${BUILD_NUMBER} \n*View Job:* ${BUILD_URL}"
         }
         failure {
-            slackSend channel: '#jenkins', message: "❌ *Deployment Failed!*\n\n*Job:* ${JOB_NAME} \n*Build Number:* ${BUILD_NUMBER} \n*View Job:* ${BUILD_URL}"
+            slackSend channel: '#jenkins', message: " *Deployment Failed!*\n\n*Job:* ${JOB_NAME} \n*Branch:* ${GIT_BRANCH} \n*Build Number:* ${BUILD_NUMBER} \n*View Job:* ${BUILD_URL}"
         }
     }
 }
+
