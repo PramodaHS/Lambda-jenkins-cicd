@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 script {
-                    git branch: 'us-4010', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
+                    git branch: 'master', url: 'https://github.com/PramodaHS/Lambda-jenkins-cicd.git'
                 }
             }
         }
